@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const todoSlice = createSlice({
   name: "todos",
-  initialState: { todos: [] as {text: string, isCompleted: boolean}[] },
+  initialState: { todos: [
+    {text: "Buy milk", isCompleted: true}, {text: "Go to the gym", isCompleted: true}, {text: "Learn React", isCompleted: false}, {text: "Learn TypeScript", isCompleted: false}
+  ] as {text: string, isCompleted: boolean}[] },
   reducers: {
     addTodo: (state, action) => {
       state.todos.push(action.payload);
@@ -21,5 +23,5 @@ const todoSlice = createSlice({
   }
 });
 
-export const { addTodo, completeTodo } = todoSlice.actions;
+export const { addTodo, completeTodo, deleteTodo } = todoSlice.actions;
 export default todoSlice.reducer;

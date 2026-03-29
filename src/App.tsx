@@ -4,8 +4,8 @@ import Todos from './views/Todos'
 import './App.css'
 
 function App() {
-  const [completedTodos, setCompletedTodos] = useState<{text: string, isCompleted: boolean}[]>([{text: "Buy milk", isCompleted: true}, {text: "Go to the gym", isCompleted: true}]);
-  const [incompleteTodos, setIncompleteTodos] = useState<{text: string, isCompleted: boolean}[]>([{text: "Learn React", isCompleted: false}, {text: "Learn TypeScript", isCompleted: false}]);
+  const [completedTodos, setCompletedTodos] = useState<{text: string, isCompleted: boolean}[]>([]);
+  const [incompleteTodos, setIncompleteTodos] = useState<{text: string, isCompleted: boolean}[]>([]);
 
   function markAsComplete(text: string){
     const todoToComplete = incompleteTodos.find(t => t.text === text);
