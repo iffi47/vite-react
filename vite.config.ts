@@ -3,5 +3,13 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+ plugins: [react()],
+ server: {
+  proxy: {
+   "/api": {
+    target: "https://literate-tribble-r759v55r6j6cxpg6-3000.app.github.dev",
+    changeOrigin: true,
+   },
+  },
+ },
+});
