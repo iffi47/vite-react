@@ -3,16 +3,21 @@ import type { LoadingState } from "../types";
 
 const loadingSlice = createSlice({
   name: "loading",
-  initialState: { loading: false } as LoadingState,
+  initialState: { loading: {completed: true, successfull: false}  } as LoadingState,
   reducers: {
     loadingStarted: (state) => {
-      state.loading = true;
+      state.loading.completed = false;
     },
-    loadingEnded: (state) => {
-      state.loading = false;
+    loadingCompleted: (state) => {
+      state.loading.completed = true;
+      state.loading.successfull= true;
+    },
+    loadingFailed: (state) => {
+      state.loading.completed= false;
+      state.loading.successfull= false
     }
   }
 });
 
-export const { loadingStarted, loadingEnded } = loadingSlice.actions;
+export const { loadingStarted, loadingCompleted, loadingFailed } = loadingSlice.actions;
 export default loadingSlice.reducer;

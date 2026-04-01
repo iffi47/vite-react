@@ -20,7 +20,10 @@ export interface Todo {
  * Represents the global loading state
  */
 export interface LoadingState {
-  loading: boolean;
+  loading: {
+    completed:boolean,
+    successfull: boolean
+  };
 }
 
 /**
