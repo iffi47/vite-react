@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
 import { completeTodo, deleteTodo } from "../store/todoSlice";
+import type { TodoListProps } from "../types";
 
-function TodoList({todo}:{todo: {text: string, isCompleted: boolean}}) {
+function TodoList({ todo }: TodoListProps) {
   
   const dispatch = useDispatch();
 

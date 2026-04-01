@@ -1,13 +1,7 @@
-// import { useState } from "react";
 import TodoList from "../components/TodoList";
 import TodoFieldForm from "./TodoFieldForm";
-import  { useSelector, useDispatch } from "react-redux";
-
-interface RootState {
-  todo: {
-    todos: {text: string, isCompleted: boolean}[]
-  }
-}   
+import { useSelector } from "react-redux";
+import type { RootState } from "../types";
 
 function Todos() {
   const todos = useSelector((state: RootState) => state.todo.todos);
