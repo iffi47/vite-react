@@ -3,16 +3,10 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { fetchTodos, addTodoAsync, updateTodoAsync, deleteTodoAsync } from "../thunks/index.js";
 import type { TodoState, Todo } from "../../types";
 
-const initialTodos: Todo[] = [
- { id: "1", text: "Buy milk", isCompleted: true },
- { id: "2", text: "Go to the gym", isCompleted: true },
- { id: "3", text: "Learn React", isCompleted: false },
- { id: "4", text: "Learn TypeScript", isCompleted: false },
-];
-
 const todoSlice = createSlice({
  name: "todo",
- initialState: { todos: initialTodos } as TodoState,
+ /** Empty until fetchTodos — avoids PATCH/DELETE with ids that only exist in stale client seed. */
+ initialState: { todos: [] as Todo[] } as TodoState,
  reducers: {
   addTodo: (state, action: PayloadAction<Todo>) => {
    state.todos.push(action.payload);

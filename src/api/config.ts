@@ -3,8 +3,9 @@
  * Centralized configuration for all API calls
  */
 
+/** In dev, use same-origin `/api` so Vite proxies to Express and avoids CORS. */
 export const API_CONFIG = {
-  BASE_URL: 'http://localhost:3000/api',
+  BASE_URL: import.meta.env.DEV ? '/api' : 'http://localhost:3000/api',
   TIMEOUT: 5000,
   HEADERS: {
     'Content-Type': 'application/json',

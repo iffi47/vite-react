@@ -3,11 +3,30 @@ import express from 'express';
 const app = express();
 const port = 3000;
 
-let todos = [{
-  id: '123',
-  text: 'Add a server',
-  isCompleted: true,
-}];
+let todos = [
+  { id: '1', text: 'Buy milk', isCompleted: true },
+  { id: '2', text: 'Go to the gym', isCompleted: true },
+  { id: '3', text: 'Learn React', isCompleted: false },
+  { id: '4', text: 'Learn TypeScript', isCompleted: false },
+];
+
+// CORS — runs first; also supports direct calls from other dev ports (e.g. 5173)
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  res.setHeader('Access-Control-Max-Age', '86400');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
 
 app.use(express.json());
 
@@ -31,7 +50,7 @@ app.delete("/api/todos/:id", (req, res) => {
  res.send();
 });
 
-app.put("/api/todos/:id", (req, res) => {
+function updateTodoById(req, res) {
  const todoId = req.params.id;
  const updatedTodo = req.body;
 
@@ -43,7 +62,10 @@ app.put("/api/todos/:id", (req, res) => {
 
  todos[todoIndex] = { ...todos[todoIndex], ...updatedTodo };
  res.json(todos[todoIndex]);
-});
+}
+
+app.put("/api/todos/:id", updateTodoById);
+app.patch("/api/todos/:id", updateTodoById);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

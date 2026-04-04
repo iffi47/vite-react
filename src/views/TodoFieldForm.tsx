@@ -1,14 +1,14 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux";
-import { addTodo } from "../store/todoSlice";
+import { useAppDispatch } from "../store/hooks";
+import { addTodoAsync } from "../store/thunks";
 
 function TodoFieldForm() {
   const [inputValue, setInputValue] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <div>
-      <form onSubmit={(e) => { e.preventDefault(); dispatch(addTodo({text: inputValue, isCompleted: false})); setInputValue(""); console.log(e) }}>
+      <form onSubmit={(e) => { e.preventDefault(); dispatch(addTodoAsync({text: inputValue, isCompleted: false})); setInputValue(""); console.log(e) }}>
         <input 
           type="text" 
           placeholder="Enter todo item here" 
