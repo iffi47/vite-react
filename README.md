@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# vite-react
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript todo app built with Vite. The UI uses Redux Toolkit (slices, thunks) and styled-components. A small Express API backs the todos in development and can be used directly in production builds.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** with **Vite 8**
+- **Redux Toolkit** & **React Redux** for state and async flows
+- **styled-components** for styling
+- **Express** (`server.js`) in-memory REST API at `http://localhost:3000`
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Node.js** (current LTS recommended)
+- **npm** (or another package manager you prefer)
 
-## Expanding the ESLint configuration
+## Install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Run the API and the Vite dev server in two terminals.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. **API** (port `3000`):
+
+   ```bash
+   node server.js
+   ```
+
+2. **Frontend** (default Vite port, often `5173`):
+
+   ```bash
+   npm run dev
+   ```
+
+In dev, the app calls `/api`, which Vite proxies to `http://localhost:3000` (see `vite.config.ts`), so you avoid CORS issues.
+
+## Scripts
+
+| Command        | Description                                      |
+| -------------- | ------------------------------------------------ |
+| `npm run dev`  | Start Vite dev server                            |
+| `npm run build`| Typecheck (`tsc -b`) then production Vite build |
+| `npm run preview` | Serve the production build locally            |
+| `npm run lint` | Run ESLint on the project                        |
+
+## Production API URL
+
+`src/api/config.ts` points the built app at `http://localhost:3000/api` when not in Vite dev mode. Adjust `API_CONFIG` if you deploy the API elsewhere.
+
+## Project layout
+
+- `src/App.tsx` — root layout; dispatches initial `fetchTodos`
+- `src/views/` — page-level UI (`Todos`, `TodoFieldForm`)
+- `src/components/` — reusable components (`TodoList`)
+- `src/store/` — Redux store, hooks, slices (`todo`, `loading`, `error`), thunks
+- `src/api/` — `fetch` helpers and todo service
+- `src/types/` — shared TypeScript types
+- `server.js` — Express routes: `GET/POST /api/todos`, `PUT/PATCH/DELETE /api/todos/:id`
+
+## License
+
+Private project (`private: true` in `package.json`).
